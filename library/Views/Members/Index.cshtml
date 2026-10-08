@@ -1,0 +1,32 @@
+﻿@model List<library.Models.Member>
+
+@{
+    ViewData["Title"] = "Members";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Members</h1>
+</div>
+
+<p>@Model.Count members in the catalogue.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Member Type</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var member in Model)
+    {
+        <tr>
+            <td>@member.FullName</td>
+            <td>@(member.Email ?? "—")</td>
+            <td>@member.MemberType</td>
+        </tr>
+    }
+    </tbody>
+</table>
