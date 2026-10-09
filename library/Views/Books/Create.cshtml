@@ -1,0 +1,38 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Add a book";
+}
+
+<h1 class="mb-3">Add a book</h1>
+
+<form asp-action="Create" method="post" class="card card-body" style="max-width:36rem">
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Category" class="form-label"></label>
+        <select asp-for="Category" class="form-select">
+            <option value="">-- choose --</option>
+            <option>Fiction</option>
+            <option>Classic</option>
+            <option>Textbook</option>
+            <option>Reference</option>
+            <option>Poetry</option>
+            <option>History</option>
+            <option>Science</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add book</button>
+</form>
