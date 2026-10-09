@@ -1,6 +1,4 @@
-using library.Repositories;
 using library.Data;
-using library.Repositories;
 using Npgsql;
 var builder = WebApplication.CreateBuilder(args);
 

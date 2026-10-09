@@ -4,8 +4,12 @@
     ViewData["Title"] = "Members";
 }
 
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Members</h1>
+    <a asp-controller="Members" asp-action="Create"
+       class="btn btn-primary">Add a member</a>
+</div>
 </div>
 
 <p>@Model.Count members in the catalogue.</p>
