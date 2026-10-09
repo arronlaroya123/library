@@ -20,6 +20,7 @@
             <th>Full Name</th>
             <th>Email</th>
             <th>Member Type</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
@@ -30,6 +31,11 @@
             <td>@member.FullName</td>
             <td>@(member.Email ?? "—")</td>
             <td>@member.MemberType</td>
+            <td>
+    <a asp-action="Edit"
+       asp-route-id="@member.MemberId"
+       class="btn btn-sm btn-primary">Edit</a>
+</td>
         </tr>
     }
     </tbody>

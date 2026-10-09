@@ -1,8 +1,7 @@
-﻿
-using library.Models;
+﻿using library.Models;
 using Npgsql;
 
-namespace library.Data;
+namespace library.Repositories;
 
 public class MemberRepository
 {
@@ -55,7 +54,6 @@ public class MemberRepository
             """;
 
         await using var command = _db.CreateCommand(sql);
-
         command.Parameters.AddWithValue("full_name", member.FullName);
         command.Parameters.AddWithValue(
             "email", (object?)member.Email ?? DBNull.Value);
@@ -96,7 +94,6 @@ public class MemberRepository
             """;
 
         await using var command = _db.CreateCommand(sql);
-
         command.Parameters.AddWithValue("full_name", member.FullName);
         command.Parameters.AddWithValue(
             "email", (object?)member.Email ?? DBNull.Value);
