@@ -65,4 +65,20 @@ public class MembersController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(long id)
+    {
+        var member = await _members.GetByIdAsync(id);
+
+        if (member == null)
+        {
+            return NotFound();
+        }
+
+        await _members.DeleteAsync(id);
+
+        return RedirectToAction(nameof(Index));
+    }
 }
