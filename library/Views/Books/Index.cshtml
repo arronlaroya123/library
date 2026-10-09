@@ -1,51 +1,97 @@
-﻿@model List<Book>
+﻿```cshtml
+@model List<Book>
 
 @{
     ViewData["Title"] = "Books";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>Books</h1>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <p class="text-uppercase text-muted small mb-1">
+                Library Management
+            </p>
+            <h1 class="fw-bold mb-1">Book Catalogue</h1>
+            <p class="text-muted mb-0">
+                Browse and manage your library books.
+            </p>
+        </div>
 
-    <a asp-action="Create" class="btn btn-primary">
-        Add a book
-    </a>
-</div>
+        <a asp-action="Create" class="btn btn-primary px-4">
+            + Add a Book
+        </a>
+    </div>
 
-<p>@Model.Count books in the catalogue.</p>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <p class="text-muted mb-1">Total Books</p>
+            <h2 class="fw-bold mb-0">@Model.Count</h2>
+        </div>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-semibold">All Books</h5>
+        </div>
 
-    <tbody>
-        @foreach (var book in Model)
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-4 py-3">Title</th>
+                        <th class="py-3">Category</th>
+                        <th class="py-3">Price</th>
+                        <th class="py-3 text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr>
+                            <td class="px-4 fw-semibold">
+                                @book.Title
+                            </td>
+                            <td>
+                                @(book.Category ?? "—")
+                            </td>
+                            <td>
+                                @(book.Price?.ToString("0.00") ?? "—")
+                            </td>
+                            <td class="text-end pe-4">
+                                <a asp-action="Edit"
+                                   asp-route-id="@book.BookId"
+                                   class="btn btn-sm btn-outline-primary me-1">
+                                    Edit
+                                </a>
+
+                                <form asp-action="DeleteConfirmed"
+                                      method="post"
+                                      style="display:inline;"
+                                      onsubmit="return confirm('Delete this book?');">
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@book.BookId" />
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.Count == 0)
         {
-            <tr>
-                <td>@book.Title</td>
-                <td>@(book.Category ?? "—")</td>
-                <td>@(book.Price?.ToString("0.00") ?? "—")</td>
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@book.BookId"
-                       class="btn btn-sm btn-secondary">
-                        Edit
-                    </a>
-
-                    <form asp-action="DeleteConfirmed" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@book.BookId" />
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Delete
-                        </button>
-                    </form>
-                </td>
-            </tr>
+            <div class="text-center text-muted py-5">
+                <h5>No books found</h5>
+                <p class="mb-0">Add a book to get started.</p>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+```
