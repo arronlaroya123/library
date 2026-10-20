@@ -1,31 +1,177 @@
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+:root {
+    --ub-red: #d71920;
+    --ub-red-dark: #a80f16;
+    --ub-black: #171717;
+    --ub-gray: #6b7280;
+    --ub-light: #f4f5f7;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Page layout */
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--ub-light);
+    color: #252525;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Keyboard focus */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem var(--ub-red);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Header and navigation */
+header {
+    flex-shrink: 0;
+}
+
+.ub-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    background-color: var(--ub-black);
+    border-bottom: 4px solid var(--ub-red);
+    padding: 14px 0;
+}
+
+    .ub-navbar .navbar-brand {
+        color: white;
+        font-size: 1.4rem;
+        font-weight: 700;
+    }
+
+.ub-logo {
+    color: var(--ub-red);
+    border-left: 4px solid var(--ub-red);
+    padding-left: 8px;
+    margin-right: 4px;
+}
+
+.ub-navbar .nav-link {
+    color: #eeeeee;
+    margin-left: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+    .ub-navbar .nav-link:hover,
+    .ub-navbar .nav-link:focus {
+        background-color: var(--ub-red);
+        color: white;
+    }
+
+/* Main content */
+.page-container {
+    flex: 1 0 auto;
+    width: 100%;
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
+
+main {
+    width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: var(--ub-black);
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-danger {
+    background-color: var(--ub-red);
+    border-color: var(--ub-red);
+    color: white;
+}
+
+    .btn-primary:hover,
+    .btn-danger:hover {
+        background-color: var(--ub-red-dark);
+        border-color: var(--ub-red-dark);
+        color: white;
+    }
+
+.btn-secondary {
+    background-color: var(--ub-gray);
+    border-color: var(--ub-gray);
+    color: white;
+}
+
+/* Tables */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .table thead th {
+        background-color: var(--ub-black);
+        color: white;
+        border-color: #383838;
+    }
+
+/* Forms */
+.form-control,
+.form-select {
+    border-color: #d1d5db;
+    border-radius: 6px;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--ub-red);
+        box-shadow: 0 0 0 0.2rem rgb(215 25 32 / 15%);
+    }
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* Cards */
+.card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 5%);
+}
+
+/* Footer */
+.ub-footer {
+    margin-top: auto;
+    flex-shrink: 0;
+    background-color: var(--ub-black);
+    color: #eeeeee;
+    border-top: 4px solid var(--ub-red);
+    padding: 22px 0;
+    font-size: 0.9rem;
 }

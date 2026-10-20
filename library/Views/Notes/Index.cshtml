@@ -1,0 +1,37 @@
+﻿@model List<library.Models.Note>
+
+@{
+    ViewData["Title"] = "Notes";
+}
+
+<h1>Notes</h1>
+
+<p>
+    <a asp-action="Create">Add New Note</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Created On</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var note in Model)
+        {
+            <tr>
+                <td>@note.Title</td>
+                <td>@note.Body</td>
+                <td>@note.CreatedOn</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@note.NoteId">Edit</a>
+                    |
+                    <a asp-action="Delete" asp-route-id="@note.NoteId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
