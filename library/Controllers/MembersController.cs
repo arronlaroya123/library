@@ -1,4 +1,5 @@
-﻿using library.Data;
+﻿using Npgsql;
+using library.Data;
 using library.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,14 +71,24 @@ public class MembersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(long id)
     {
-        var member = await _members.GetByIdAsync(id);
-
-        if (member == null)
+        try
         {
-            return NotFound();
+            await _members.DeleteAsync(id);
         }
+        catch (PostgresException ex) when (
+            ex.SqlState == PostgresErrorCodes.ForeignKeyViolation)
+        {
+            var member = await _members.GetByIdAsync(id);
 
-        await _members.DeleteAsync(id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Error = "This member has loans on record, so the database will not delete them.";
+
+            return View("Delete", member);
+        }
 
         return RedirectToAction(nameof(Index));
     }
