@@ -1,44 +1,69 @@
 ﻿@model Book
 
 @{
-    ViewData["Title"] = "Edit a book";
+    ViewData["Title"] = "Edit a Book";
 }
 
-<h1 class="mb-3">Edit a book</h1>
-
-<form asp-action="Edit" method="post" class="card card-body" style="max-width:36rem">
-
-    <input type="hidden" asp-for="BookId" />
-
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+<div class="container py-4">
+    <div class="mb-4">
+        <p class="text-uppercase text-muted small mb-1">Library Management</p>
+        <h1 class="fw-bold mb-1">✏️ Edit a Book</h1>
+        <p class="text-muted">Update the book's information below.</p>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Category" class="form-label"></label>
-        <select asp-for="Category" class="form-select">
-            <option value="">-- choose --</option>
-            <option>Fiction</option>
-            <option>Classic</option>
-            <option>Textbook</option>
-            <option>Reference</option>
-            <option>Poetry</option>
-            <option>History</option>
-            <option>Science</option>
-        </select>
-    </div>
+    <div class="card border-0 shadow-sm" style="max-width: 42rem;">
+        <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0">Update Book Information</h5>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Price" class="form-label"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
+        <div class="card-body p-4">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="BookId" />
 
-    <button type="submit" class="btn btn-primary">Save changes</button>
-</form>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Title" class="form-label fw-semibold">Book Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Enter book title" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Category" class="form-label fw-semibold">Category</label>
+                    <select asp-for="Category" class="form-select">
+                        <option value="">-- choose category --</option>
+                        <option>Fiction</option>
+                        <option>Classic</option>
+                        <option>Textbook</option>
+                        <option>Reference</option>
+                        <option>Poetry</option>
+                        <option>History</option>
+                        <option>Science</option>
+                    </select>
+                    <span asp-validation-for="Category" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Price" class="form-label fw-semibold">Price</label>
+                    <input asp-for="Price" class="form-control" placeholder="Enter book price" />
+                    <span asp-validation-for="Price" class="text-danger small"></span>
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">
+                        ✓ Save Changes
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-

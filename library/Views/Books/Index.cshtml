@@ -1,5 +1,4 @@
-﻿```cshtml
-@model List<Book>
+﻿@model List<Book>
 
 @{
     ViewData["Title"] = "Books";
@@ -52,12 +51,15 @@
                             <td class="px-4 fw-semibold">
                                 @book.Title
                             </td>
+
                             <td>
                                 @(book.Category ?? "—")
                             </td>
+
                             <td>
                                 @(book.Price?.ToString("0.00") ?? "—")
                             </td>
+
                             <td class="text-end pe-4">
                                 <a asp-action="Edit"
                                    asp-route-id="@book.BookId"
@@ -65,19 +67,11 @@
                                     Edit
                                 </a>
 
-                                <form asp-action="DeleteConfirmed"
-                                      method="post"
-                                      style="display:inline;"
-                                      onsubmit="return confirm('Delete this book?');">
-                                    <input type="hidden"
-                                           name="id"
-                                           value="@book.BookId" />
-
-                                    <button type="submit"
-                                            class="btn btn-sm btn-outline-danger">
-                                        Delete
-                                    </button>
-                                </form>
+                                <a asp-action="Delete"
+                                   asp-route-id="@book.BookId"
+                                   class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
                             </td>
                         </tr>
                     }
@@ -94,4 +88,3 @@
         }
     </div>
 </div>
-```

@@ -11,7 +11,6 @@ public class MembersController : Controller
     private readonly MemberRepository _members;
     private readonly LoanRepository _loans;
 
-    // ASP.NET Core provides both repositories.
     public MembersController(MemberRepository members, LoanRepository loans)
     {
         _members = members;
@@ -24,11 +23,14 @@ public class MembersController : Controller
         return View(members);
     }
 
+    // GET: Members/Create
+    [HttpGet]
     public IActionResult Create()
     {
         return View(new Member());
     }
 
+    // POST: Members/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Member member)
@@ -52,6 +54,21 @@ public class MembersController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // GET: Members/Edit/5
+    [HttpGet]
+    public async Task<IActionResult> Edit(long id)
+    {
+        var member = await _members.GetByIdAsync(id);
+
+        if (member == null)
+        {
+            return NotFound();
+        }
+
+        return View(member);
+    }
+
+    // POST: Members/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(long id, Member member)
@@ -80,6 +97,7 @@ public class MembersController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    // POST: Members/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(long id)
@@ -106,27 +124,23 @@ public class MembersController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET /Members/Details/5 : one member and their loans.
+    // GET: Members/Details/5
     public async Task<IActionResult> Details(long id)
     {
-        // 1. Load the member.
         var member = await _members.GetByIdAsync(id);
 
-        // 2. If there is no such member.
         if (member == null)
         {
-            // 3. Answer "not found".
             return NotFound();
         }
 
-        // 4. Put the member and their loans together for the page.
         var details = new MemberDetails
         {
             Member = member,
             Loans = await _loans.GetByMemberAsync(id)
         };
 
-        // 5. Show the page.
         return View(details);
     }
 }
+    
