@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿
+using Npgsql;
 using library.Data;
 using library.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +9,24 @@ namespace library.Controllers;
 public class MembersController : Controller
 {
     private readonly MemberRepository _members;
+    private readonly LoanRepository _loans;
 
-    public MembersController(MemberRepository members)
+    // ASP.NET Core provides both repositories.
+    public MembersController(MemberRepository members, LoanRepository loans)
     {
         _members = members;
+        _loans = loans;
     }
 
     public async Task<IActionResult> Index()
     {
         var members = await _members.GetAllAsync();
         return View(members);
+    }
+
+    public IActionResult Create()
+    {
+        return View(new Member());
     }
 
     [HttpPost]
@@ -70,10 +79,6 @@ public class MembersController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-    public IActionResult Create()
-    {
-        return View(new Member());
-    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -99,5 +104,29 @@ public class MembersController : Controller
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    // GET /Members/Details/5 : one member and their loans.
+    public async Task<IActionResult> Details(long id)
+    {
+        // 1. Load the member.
+        var member = await _members.GetByIdAsync(id);
+
+        // 2. If there is no such member.
+        if (member == null)
+        {
+            // 3. Answer "not found".
+            return NotFound();
+        }
+
+        // 4. Put the member and their loans together for the page.
+        var details = new MemberDetails
+        {
+            Member = member,
+            Loans = await _loans.GetByMemberAsync(id)
+        };
+
+        // 5. Show the page.
+        return View(details);
     }
 }

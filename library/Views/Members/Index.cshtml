@@ -1,5 +1,4 @@
-﻿
-@model List<library.Models.Member>
+﻿@model List<library.Models.Member>
 
 @{
     ViewData["Title"] = "Members";
@@ -54,13 +53,22 @@
                             <td class="px-4 fw-semibold">
                                 @member.FullName
                             </td>
+
                             <td>@(member.Email ?? "—")</td>
+
                             <td>
                                 <span class="badge bg-light text-dark border">
                                     @member.MemberType
                                 </span>
                             </td>
+
                             <td class="text-end pe-4">
+                                <a asp-action="Details"
+                                   asp-route-id="@member.MemberId"
+                                   class="btn btn-sm btn-outline-primary me-1">
+                                    Loans
+                                </a>
+
                                 <a asp-action="Edit"
                                    asp-route-id="@member.MemberId"
                                    class="btn btn-sm btn-outline-primary me-1">
