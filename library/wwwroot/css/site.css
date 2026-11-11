@@ -175,3 +175,20 @@ h4 {
     padding: 22px 0;
     font-size: 0.9rem;
 }
+
+/* University of Baguio Background Image */
+
+.page-container {
+    background: transparent;
+}
+
+body {
+    min-height: 100vh;
+    background-image: url('/image/library-background.jpg') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f8f9fa;
+}
+

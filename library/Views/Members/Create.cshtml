@@ -5,57 +5,148 @@
 }
 
 <div class="container py-4">
+
+    <!-- Header -->
     <div class="mb-4">
-        <p class="text-uppercase text-muted small mb-1">Library Management</p>
-        <h1 class="fw-bold mb-1">👤 Add a Member</h1>
-        <p class="text-muted">Enter the member's information below.</p>
+        <span class="text-danger fw-bold text-uppercase small"
+              style="letter-spacing: 3px;">
+            Library Management
+        </span>
+
+        <h1 class="fw-bold mt-2 mb-1">Add a Member</h1>
+
+        <p class="text-muted mb-0">
+            Register a new member to your library.
+        </p>
     </div>
 
-    <div class="card border-0 shadow-sm" style="max-width: 42rem;">
-        <div class="card-header bg-primary text-white py-3">
-            <h5 class="mb-0">Member Information</h5>
+    <!-- Form Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden"
+         style="max-width: 650px;">
+
+        <!-- Card Header -->
+        <div class="card-header border-0 text-white p-4"
+             style="background: linear-gradient(135deg, #181818, #383838);">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="rounded-3 d-flex align-items-center justify-content-center"
+                     style="width: 50px; height: 50px; background: #dc3545;">
+                    <span style="font-size: 25px;">👤</span>
+                </div>
+
+                <div>
+                    <h5 class="fw-bold mb-1">Member Information</h5>
+                    <small class="text-white-50">
+                        Enter the member's personal details.
+                    </small>
+                </div>
+
+            </div>
         </div>
 
+        <!-- Card Body -->
         <div class="card-body p-4">
+
             <form asp-action="Create" method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-                <div class="mb-4">
-                    <label asp-for="FullName" class="form-label fw-semibold">Full Name</label>
-                    <input asp-for="FullName" class="form-control" placeholder="Enter full name" required />
-                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger rounded-3">
                 </div>
 
+                <!-- Full Name -->
                 <div class="mb-4">
-                    <label asp-for="Email" class="form-label fw-semibold">Email Address</label>
-                    <input asp-for="Email" class="form-control" type="text" placeholder="Enter email address" />
-                    <span asp-validation-for="Email" class="text-danger small"></span>
+
+                    <label asp-for="FullName"
+                           class="form-label fw-semibold">
+                        Full Name
+                    </label>
+
+                    <input asp-for="FullName"
+                           class="form-control form-control-lg rounded-3"
+                           placeholder="Example: Dela Cruz, Juan"
+                           required />
+
+                    <span asp-validation-for="FullName"
+                          class="text-danger small">
+                    </span>
+
+                    <small class="text-muted">
+                        Format: Lastname, Firstname
+                    </small>
+
                 </div>
 
+                <!-- Email -->
                 <div class="mb-4">
-                    <label asp-for="MemberType" class="form-label fw-semibold">Member Type</label>
-                    <select asp-for="MemberType" class="form-select" required>
-                        <option value="">(choose member type)</option>
+
+                    <label asp-for="Email"
+                           class="form-label fw-semibold">
+                        Email Address
+                    </label>
+
+                    <input asp-for="Email"
+                           type="text"
+                           class="form-control form-control-lg rounded-3"
+                           placeholder="Enter email address" />
+
+                    <span asp-validation-for="Email"
+                          class="text-danger small">
+                    </span>
+
+                </div>
+
+                <!-- Member Type -->
+                <div class="mb-4">
+
+                    <label asp-for="MemberType"
+                           class="form-label fw-semibold">
+                        Member Type
+                    </label>
+
+                    <select asp-for="MemberType"
+                            class="form-select form-select-lg rounded-3"
+                            required>
+
+                        <option value="">-- Choose member type --</option>
                         <option value="Regular">Regular</option>
                         <option value="Student">Student</option>
                         <option value="Faculty">Faculty</option>
+
                     </select>
-                    <span asp-validation-for="MemberType" class="text-danger small"></span>
+
+                    <span asp-validation-for="MemberType"
+                          class="text-danger small">
+                    </span>
+
                 </div>
 
                 <hr class="my-4" />
 
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary px-4">
+                <!-- Buttons -->
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <button type="submit"
+                            class="btn btn-danger px-4 py-2 rounded-3">
                         + Add Member
                     </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary">
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-dark px-4 py-2 rounded-3">
                         Cancel
                     </a>
+
                 </div>
+
             </form>
+
         </div>
     </div>
+
+    <p class="text-muted small mt-3">
+        Please make sure the member information is correct before saving.
+    </p>
+
 </div>
 
 @section Scripts {

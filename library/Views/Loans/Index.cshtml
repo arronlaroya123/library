@@ -5,111 +5,126 @@
 }
 
 <div class="container py-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-            <p class="text-uppercase text-muted small mb-1">
-                Library Management
-            </p>
-            <h1 class="fw-bold mb-1">Loan Records</h1>
-            <p class="text-muted mb-0">
-                Monitor borrowed books and their return status.
-            </p>
+            <p class="text-uppercase text-muted small mb-1">Library Management</p>
+            <h1 class="fw-bold mb-1">📚 Loan Records</h1>
+            <p class="text-muted mb-0">Monitor borrowed books and their return status.</p>
         </div>
 
-        <a asp-action="Borrow" class="btn btn-primary px-4">
+        <a asp-action="Borrow" class="btn btn-danger px-4 py-2 rounded-3">
             + Borrow a Book
         </a>
     </div>
 
-    <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body p-4">
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+        <div class="card-body p-4 text-white"
+             style="background: linear-gradient(135deg, #212529, #495057);">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class="text-muted mb-1">Total Loan Records</p>
+                    <p class="text-white-50 mb-1">Total Loan Records</p>
                     <h2 class="fw-bold mb-0">@Model.Count</h2>
                 </div>
-                <div class="bg-light rounded-3 p-3">
+
+                <div class="rounded-3 p-3" style="background: #dc3545;">
                     <span class="fs-2">📚</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white py-3">
-            <h5 class="fw-semibold mb-0">All Loans</h5>
-            <small class="text-muted">Newest records appear first</small>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+            <h5 class="fw-semibold mb-1">All Loans</h5>
+            <small class="text-white-50">Newest records appear first</small>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th class="px-4 py-3">Member</th>
-                        <th class="py-3">Book</th>
-                        <th class="py-3">Loaned</th>
-                        <th class="py-3">Due Date</th>
-                        <th class="py-3">Status</th>
-                        <th class="text-end pe-4">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var loan in Model)
-                    {
-                        <tr>
-                            <td class="px-4 fw-semibold">
-                                @loan.MemberName
-                            </td>
-
-                            <td>@loan.BookTitle</td>
-
-                            <td>
-                                @loan.LoanedOn.ToString("yyyy-MM-dd")
-                            </td>
-
-                            <td>
-                                @loan.LoanedOn.AddDays(loan.DaysAllowed).ToString("yyyy-MM-dd")
-                            </td>
-
-                            <td>
-                                <span class="badge rounded-pill @(loan.Status == "Overdue" ? "text-bg-danger" : loan.Status == "Out" ? "text-bg-warning" : "text-bg-success")">
-                                    @loan.Status
-                                </span>
-                            </td>
-
-                            <td class="text-end pe-4">
-                                @if (loan.ReturnedOn == null)
-                                {
-                                    <form asp-action="Return"
-                                          asp-route-id="@loan.LoanId"
-                                          method="post"
-                                          class="d-inline">
-                                        <button type="submit"
-                                                class="btn btn-sm btn-outline-success">
-                                            Return
-                                        </button>
-                                    </form>
-                                }
-                                else
-                                {
-                                    <span class="text-muted small">Completed</span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        @if (Model.Count == 0)
+        @if (Model.Any())
         {
-            <div class="text-center text-muted py-5">
-                <h5>No loan records found</h5>
-                <p class="mb-0">Borrow a book to create a new record.</p>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3">Member</th>
+                            <th class="py-3">Book</th>
+                            <th class="py-3">Loaned</th>
+                            <th class="py-3">Due Date</th>
+                            <th class="py-3">Status</th>
+                            <th class="text-center pe-4 py-3">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var loan in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold">
+                                    @loan.MemberName
+                                </td>
+
+                                <td>@loan.BookTitle</td>
+
+                                <td class="text-nowrap">
+                                    @loan.LoanedOn.ToString("yyyy-MM-dd")
+                                </td>
+
+                                <td class="text-nowrap">
+                                    @loan.LoanedOn.AddDays(loan.DaysAllowed).ToString("yyyy-MM-dd")
+                                </td>
+
+                                <td>
+                                    @if (loan.Status == "Overdue")
+                                    {
+                                        <span class="badge rounded-pill text-bg-danger">Overdue</span>
+                                    }
+                                    else if (loan.Status == "Out")
+                                    {
+                                        <span class="badge rounded-pill text-bg-warning">Out</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge rounded-pill text-bg-success">Returned</span>
+                                    }
+                                </td>
+
+                                <td class="text-center pe-4">
+                                    @if (loan.ReturnedOn == null)
+                                    {
+                                        <form asp-action="Return"
+                                              asp-route-id="@loan.LoanId"
+                                              method="post"
+                                              class="d-inline">
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-success rounded-2">
+                                                Return
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Completed</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         }
-    </div>
+        else
+        {
+            <div class="text-center py-5">
+                <div class="fs-1 mb-3">📚</div>
+                <h5 class="fw-bold">No Loan Records Found</h5>
+                <p class="text-muted mb-3">Borrow a book to create a new record.</p>
+                <a asp-action="Borrow" class="btn btn-danger rounded-3 px-4">
+                    + Borrow a Book
+                </a>
+            </div>
+        }
 
+        <div class="card-footer bg-white text-muted small py-3">
+            Total records: @Model.Count
+        </div>
+    </div>
 </div>
