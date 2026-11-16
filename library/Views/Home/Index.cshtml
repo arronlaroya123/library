@@ -1,8 +1,50 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid px-0">
+    <div class="position-relative rounded-4 overflow-hidden mb-4"
+         style="min-height: 420px;
+        background: linear-gradient(90deg, rgba(0,0,0,.85), rgba(0,0,0,.25)),
+        url('/images/library-banner.jpg') center/cover no-repeat;
+        background-color: #252525;">
+
+        <div class="position-relative text-white p-5 d-flex flex-column justify-content-center"
+             style="min-height: 420px; max-width: 650px;">
+
+            <span class="text-uppercase fw-bold mb-3"
+                  style="color: #ff5555; letter-spacing: 3px;">
+                Library Management System
+            </span>
+
+            <h1 class="display-3 fw-bold mb-3">
+                Welcome to Your Library
+            </h1>
+
+            <p class="fs-5 text-light mb-4">
+                Discover books, manage members, and keep track of
+                every loan in one place.
+            </p>
+
+            <div class="d-flex gap-3 flex-wrap">
+                <a asp-controller="Books" asp-action="Index"
+                   class="btn btn-danger btn-lg px-4">
+                    Explore Books
+                </a>
+
+                <a asp-controller="Loans" asp-action="Index"
+                   class="btn btn-outline-light btn-lg px-4">
+                    View Loans
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center py-4">
+        <h2 class="fw-bold">Your Library, Organized.</h2>
+        <p class="text-muted">
+            Everything you need to manage your library efficiently.
+        </p>
+    </div>
 </div>
+

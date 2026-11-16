@@ -4,34 +4,89 @@
     ViewData["Title"] = "Notes";
 }
 
-<h1>Notes</h1>
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <p class="text-uppercase text-muted small mb-1">Library Management</p>
+            <h1 class="fw-bold mb-1">📝 Notes</h1>
+            <p class="text-muted mb-0">Manage your library notes and records.</p>
+        </div>
 
-<p>
-    <a asp-action="Create">Add New Note</a>
-</p>
+        <a asp-action="Create" class="btn btn-danger px-4 py-2 rounded-3">
+            + Add New Note
+        </a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Body</th>
-            <th>Created On</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var note in Model)
-        {
-            <tr>
-                <td>@note.Title</td>
-                <td>@note.Body</td>
-                <td>@note.CreatedOn</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@note.NoteId">Edit</a>
-                    |
-                    <a asp-action="Delete" asp-route-id="@note.NoteId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-semibold">Notes Directory</h5>
+                <span class="badge bg-secondary">@Model.Count notes</span>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4 py-3">Title</th>
+                                <th class="py-3">Body</th>
+                                <th class="py-3">Created On</th>
+                                <th class="text-center py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var note in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">
+                                        @note.Title
+                                    </td>
+                                    <td style="min-width: 200px; max-width: 400px;">
+                                        <span class="text-muted">
+                                            @note.Body
+                                        </span>
+                                    </td>
+                                    <td class="text-muted text-nowrap">
+                                        @note.CreatedOn
+                                    </td>
+                                    <td class="text-center text-nowrap">
+                                        <a asp-action="Edit"
+                                           asp-route-id="@note.NoteId"
+                                           class="btn btn-sm btn-outline-dark rounded-2 me-1">
+                                            Edit
+                                        </a>
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@note.NoteId"
+                                           class="btn btn-sm btn-outline-danger rounded-2">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <div class="fs-1 mb-3">📝</div>
+                    <h5 class="fw-bold">No Notes Yet</h5>
+                    <p class="text-muted mb-3">Start by adding your first note.</p>
+                    <a asp-action="Create" class="btn btn-danger rounded-3 px-4">
+                        + Add New Note
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="card-footer bg-white text-muted small py-3">
+            Total records: @Model.Count
+        </div>
+    </div>
+</div>
